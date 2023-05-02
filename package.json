@@ -1,0 +1,8 @@
+{
+  "name": "zetsy-product-management",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Zetsy-Store/zetsy-product-management.git",
+  "author": "rpc404 <theboringschool.org@gmail.com>",
+  "license": "MIT"
+}
