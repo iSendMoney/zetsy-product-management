@@ -1,26 +1,40 @@
-const cluster = require('node:cluster');
-const http = require('node:http');
-const numCPUs = require('node:os').cpus().length;
-const process = require('node:process');
-
-if (cluster.isPrimary) {
-  console.log(`Primary ${process.pid} is running`);
-
-  // Fork workers.
+const cluster = require("cluster");
+const numCPUs = require("os").cpus().length;
+const PORT = process.env.PORT || 3000;
+const workers = {};
+function spawn() {
+  const worker = cluster.fork();
+  workers[worker.pid] = worker;
+  return worker;
+}
+if (cluster.isMaster) {
+  console.log(`Master ${process.pid} is running`);
   for (let i = 0; i < numCPUs; i++) {
-    cluster.fork();
+    spawn();
   }
 
-  cluster.on('exit', (worker, code, signal) => {
-    console.log(`worker ${worker.process.pid} died`);
+  cluster.on("exit", (worker, code, signal) => {
+    console.log(`Worker ${worker.process.pid} died`);
+    cluster.fork();
+  });
+
+  cluster.on("listening", function (worker, address) {
+    console.log("Worker started with PID " + worker.process.pid + ".");
   });
 } else {
-  // Workers can share any TCP connection
-  // In this case it is an HTTP server
-  http.createServer((req, res) => {
-    res.writeHead(200);
-    res.end('hello world\n');
-  }).listen(8000);
-
+  const app = require("./app");
+  // Worker process
   console.log(`Worker ${process.pid} started`);
+
+  const server = app.listen(PORT, (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(
+        `Worker ${process.pid} started and listening on port ${
+          server.address().port
+        }`
+      );
+    }
+  });
 }
