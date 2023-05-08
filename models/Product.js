@@ -12,6 +12,7 @@ const productSchema = new Schema({
   productCode: schemaReturnType(String, true),
   productSku: schemaReturnType(String, true),
   category: schemaReturnType(String, true),
+  bannerImage: schemaReturnType(String, true),
   image: schemaReturnType(Array, true),
   tags: schemaReturnType(Array, true),
   created_at: {
