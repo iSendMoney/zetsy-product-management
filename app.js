@@ -8,6 +8,7 @@ const hpp = require("hpp");
 // const csurf = require("csurf");
 const { default: mongoose } = require("mongoose");
 const router = require("./routers/Router");
+const StoreRouter = require("./routers/Store");
 require("dotenv").config();
 
 const limiter = rateLimit({
@@ -44,6 +45,7 @@ mongoose
 
 app
   .use("/api/v1/product", router)
+  .use("/api/v1/store", StoreRouter)
   .use("*", (req, res) => res.status(404).send("API not found!"));
 
 module.exports = app;
