@@ -1,8 +1,11 @@
+const validateStore = require("../middlewares/Store");
 const Store = require("../models/Store");
 const slugify = require("slugify");
 
 module.exports = {
   newStore: async (req, res) => {
+    validateStore(req, res, next);
+
     try {
       const { name, description, socials, owner } = req.body;
 
