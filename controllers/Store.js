@@ -103,4 +103,36 @@ module.exports = {
 
     res.status(200).json({ stores, message: "Stores retrieved successfully" });
   },
+  updateStore: async (req, res) => {
+    try {
+      const { store } = req.params;
+      const update = req.body;
+
+      const _store = await Store.findOneAndUpdate(
+        { subdomain: store },
+        { $set: update },
+        { new: true }
+      );
+      res.status(200).json({
+        store: _store,
+        message: "Store updated successfully",
+      });
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  },
+
+  deleteStore: async (req, res) => {
+    try {
+      const { store } = req.params;
+
+      const _store = await Store.findOneAndDelete({ subdomain: store });
+      res.status(200).json({
+        store: _store,
+        message: "Store deleted successfully",
+      });
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  },
 };
