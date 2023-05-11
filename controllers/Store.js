@@ -3,12 +3,13 @@ const Store = require("../models/Store");
 const slugify = require("slugify");
 
 module.exports = {
-  newStore: async (req, res) => {
+  newStore: async (req, res, next) => {
     validateStore(req, res, next);
 
     try {
       const { name, description, socials, owner } = req.body;
 
+      // @note subdomain must be unique thus random string or number must be used
       const subdomain = slugify(name, {
         remove: /[*+~.()'"!:@]/g,
       }).toLowerCase();

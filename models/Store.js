@@ -23,7 +23,7 @@ const storeSchema = new mongoose.Schema({
     category: {
       type: String,
       required: true,
-      enum: ["Food", "Clothing", "Electronics", "Beauty", "Home", "Other"],
+      enum: ["Food", "Clothing", "Electronics", "Beauty", "Home", "Fashion", "Other"],
     },
     target_location: {
       type: String,
