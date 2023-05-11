@@ -1,19 +1,5 @@
 const validateStore = (req, res, next) => {
-  const {
-    name,
-    subdomain,
-    description: {
-      no_of_emp,
-      estimated_revenue,
-      category,
-      target_location,
-      target_age_group,
-      target_gender,
-      target_audience,
-    },
-    socials,
-    owner,
-  } = req.body;
+  const { name, subdomain, socials, owner } = req.body;
 
   // Name validation
   if (!name || typeof name !== "string" || name.length < 3) {
@@ -23,19 +9,6 @@ const validateStore = (req, res, next) => {
   // Subdomain validation
   if (!subdomain || typeof subdomain !== "string" || subdomain.length < 3) {
     return res.status(400).send("Subdomain is invalid");
-  }
-
-  // Description validation
-  if (
-    !no_of_emp ||
-    !estimated_revenue ||
-    !category ||
-    !target_location ||
-    !target_age_group ||
-    !target_gender ||
-    !target_audience
-  ) {
-    return res.status(400).send("Store description is invalid");
   }
 
   // Socials validation

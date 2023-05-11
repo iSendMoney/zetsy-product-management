@@ -7,7 +7,7 @@ const helmet = require("helmet");
 const hpp = require("hpp");
 // const csurf = require("csurf");
 const { default: mongoose } = require("mongoose");
-const router = require("./routers/Router");
+const router = require("./routers/Product");
 const StoreRouter = require("./routers/Store");
 require("dotenv").config();
 
