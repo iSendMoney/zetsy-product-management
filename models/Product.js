@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const productSchema = new Schema({
   name: schemaReturnType(String, true),
+  storeId: schemaReturnType(mongoose.Schema.Types.ObjectId, true),
   description: {
     productInfo: schemaReturnType(String, true),
     quantity: schemaReturnType(Number, true, 0),

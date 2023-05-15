@@ -16,6 +16,17 @@ ProductRouter.get("/", async (req, res) => {
 })
   // Get single product
   .get("/:id", getProduct)
+  // Get product by store id
+  .get("/store-product/:storeid", async (req, res) => {
+    try {
+      const products = await Product.find({ storeId: req.params.storeid });
+      res.status(200).json({
+        products,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  })
   // Create new product
   .post("/", createProduct)
   // Update product
